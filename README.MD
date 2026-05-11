@@ -61,7 +61,7 @@ Overcurrent is an important factor to consider when working with LEDs. It happen
 
 You can use online led-resistor calculators like this: [https://ohmslawcalculator.com/led-resistor-calculator](https://ohmslawcalculator.com/led-resistor-calculator)
 
-A red LED typically has a forward voltage (or voltage drop) of 1.8 - 2 Volt. The current it uses depends on the resistor. Normal use is around 20 mA. Lower current makes it shiine less bright, but keeps the life span longer.
+A red LED typically has a forward voltage (or voltage drop) of 1.8 - 2 Volt. The current it uses depends on the resistor. Normal use is around 20 mA. Lower current makes it shine less bright, but keeps the life span longer.
 
 ## Pushbuttons
 
@@ -95,6 +95,9 @@ Two important files:
 - ```platformio.ini```: config file for your project
 
 If you don't use them, you can delete the ``include``, ``lib`` and ``test`` folder.
+
+## Drivers
+If you have a Windows, you probably need to [install VCP Drivers](https://www.silabs.com/software-and-tools/usb-to-uart-bridge-vcp-drivers?tab=downloads) in order to communicate with your ESP32. Download the CP210x Universal Windows Driver.
 
 # blinking onboard led
 
@@ -188,7 +191,7 @@ So connect the point between these two with a pin on your arduino.
 
 ![ldr wiring](images/ldr-01-wiring.png)
 
-What happens next on this pin is an analog to digital conversion: ADC. If you look again at the [pinout for the esp32-wroom-32](images/ESP32-NodeMCU-32S-Pinout.png) you will see that some pins have **ADC** next to them. These pins will automatically do this conversion for you and give a value in your caode you can use.
+What happens next on this pin is an analog to digital conversion: ADC. If you look again at the [pinout for the esp32-wroom-32](images/ESP32-NodeMCU-32S-Pinout.png) you will see that some pins have **ADC** next to them. These pins will automatically do this conversion for you and give a value in your code you can use.
 
 Check the example project: [light sensor](04-light-sensor).
 
@@ -214,7 +217,7 @@ Upon saving ``platformio.ini``, the IDE downloads and imports all the files for 
 
 ## inspecting the library examples
 
-most libraries have some example files.
+Most libraries have some example files.
 
 For the sh1106 library, browse them in the hidden folder: ``.pio/libdeps/esp32dev/Adafruit SH1106/examples``
 
