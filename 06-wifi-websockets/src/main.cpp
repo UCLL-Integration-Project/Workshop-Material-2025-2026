@@ -17,6 +17,7 @@ SocketIOclient socketIO;
 
 #define i2C_ADDRESS 0x3C
 Adafruit_SH1106 display;
+bool displayAvailable = false;
 
 // buffer for the oled message
 char messageBuffer[256];
@@ -35,6 +36,10 @@ const char* request_url[] = {"https://websocket.itip-demo.ucll.cloud/demotext.tx
  * @param messageBuffer
  */
 void displayMessage(const char* messageBuffer) {
+    if (!displayAvailable) {
+        return;
+    }
+
     String message = String(messageBuffer);
     display.clearDisplay();
     display.setCursor(0, 10);
@@ -194,12 +199,21 @@ void setup() {
 
     SPI.begin();
 
-    display.begin(SH1106_SWITCHCAPVCC, i2C_ADDRESS);
-    display.clearDisplay();
-    display.setTextSize(1);
-    display.setTextColor(WHITE);
+    Wire.begin();
 
-    displayMessage("oled init");
+    Wire.beginTransmission(i2C_ADDRESS);
+    displayAvailable = (Wire.endTransmission() == 0);
+
+    if (displayAvailable) {
+        display.begin(SH1106_SWITCHCAPVCC, i2C_ADDRESS);
+        display.clearDisplay();
+        display.setTextSize(1);
+        display.setTextColor(WHITE);
+
+        displayMessage("oled init");
+    } else {
+        Serial.println("OLED not detected, continuing without display");
+    }
 
     WiFi.begin(ssid, password);
 
