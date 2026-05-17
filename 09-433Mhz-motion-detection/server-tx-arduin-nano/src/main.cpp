@@ -14,7 +14,6 @@ SCL       A5
 #define pinTransmitter 2
 
 RCSwitch mySwitch = RCSwitch();
-const unsigned long code = 123456; // Example code to send when movement is detected
 bool isDetected = false;
 
 
@@ -82,6 +81,8 @@ void setup() {
 
     delay(100);
 
+    randomSeed(analogRead(A0));
+
     // Read baseline (resting position)
     readAccel(baseX, baseY, baseZ);
     Serial.print("Baseline - X: ");
@@ -112,6 +113,11 @@ void loop() {
         Serial.print("Movement detected! Magnitude: ");
         Serial.println(magnitude);
         digitalWrite(pinLed, HIGH);
+
+        unsigned long code = random(0, 16777216UL); // random 24-bit value
+
+        Serial.print("Sending code: ");
+        Serial.println(code);
 
         mySwitch.send(code, 24);
 
